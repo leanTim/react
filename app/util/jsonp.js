@@ -51,4 +51,4 @@
     }
 })();
 
-module.exports = jsonp;
+export default jsonp;

@@ -8,10 +8,11 @@ let Search = React.createClass({
 			bg: "transparent",
 		}
 	},
-	componentDidMount: function() {
+	componentDidMount () {
 		
 		window.onscroll = (event) => {
 			let realHeight = document.documentElement.scrollTop || document.body.scrollTop;
+			console.log(realHeight)
 			let optatic = 0.8 * (realHeight/142);
 			if(optatic <= 0.8 ) {
 				this.setState({
@@ -31,7 +32,7 @@ let Search = React.createClass({
 					<div className="frc pr">
 						<span className="searchicon pa"></span>
 						<form>
-							<input placeholder="全场畅饮，部分低至99减50" type="text"/>
+							<input placeholder="全场畅饮" type="text"/>
 						</form>
 					</div>
 					<div className="sub pa">
@@ -43,4 +44,4 @@ let Search = React.createClass({
 	}
 })
 
-module.exports = Search;
+export default Search;

@@ -1,31 +1,40 @@
 
 require('./like.css');
-let jsonp = require('../util/jsonp.js');
-import React from 'react'; 
+// let jsonp = require('../util/jsonp.js');
+import jsonp from '../util/jsonp.js'
+import React, {Component} from 'react'; 
 
-let Like = React.createClass({
-	getInitialState: function() {
-		return {
-			stores: [],
+class Like extends Component{
+	// getInitialState: function() {
+	// 	return {
+	// 		stores: [],
+	// 	}
+	// }
+	constructor (props) {
+		super(props)
+		this.state = {
+			stores: []
 		}
-	},
+	}
 
-	componentDidMount: function() {
-		jsonp(this.props.source, "", "callback", (data) => {
-			if(data.status) {
-				if(this.isMounted()) {
-					this.setState({
-						stores: data.data,
-					});
-				}
+	componentDidMount () {
+		this.serverRequest = jsonp(this.props.source, "", "callback", (data) => {
+			if(data.status) {				
+				this.setState({
+					stores: data.data,
+				});			
 			}else {
 				alert(data.msg);
 				reject("get data error!")
 			}
 		})
-	},
+	}
 
-	render: function() {
+	componentWillUnmount () {
+		this.serverRequest.abort()
+	}
+
+	render () {
 		let countId = 0;
 		return (
 			<div id="like">
@@ -53,6 +62,6 @@ let Like = React.createClass({
 			</div>
 		);
 	}
-})
+}
 
-module.exports = Like;
+export default Like;

@@ -2,7 +2,8 @@
 require('./more.css');
 require('../lib/swiper.min.css');
 let Swiper = require('../lib/swiper.min.js');
-let jsonp = require('../util/jsonp.js');
+// let jsonp = require('../util/jsonp.js');
+import jsonp from '../util/jsonp.js'
 import React from 'react'; 
 
 var More = React.createClass({

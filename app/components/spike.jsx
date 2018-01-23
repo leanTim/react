@@ -1,6 +1,7 @@
 
 require('./spike.css');
-let jsonp = require('../util/jsonp.js');
+// let jsonp = require('../util/jsonp.js');
+import jsonp from '../util/jsonp.js'
 import React from 'react'; 
 
 let Spike = React.createClass({

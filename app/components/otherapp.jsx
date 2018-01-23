@@ -1,51 +1,56 @@
+require("./otherapp.css");
+// let jsonp = require("../util/jsonp.js");
+import jsonp from '../util/jsonp.js'
 
-require('./otherapp.css');
-let jsonp = require('../util/jsonp.js');
+import React, {Component} from "react";
 
-import React from 'react'; 
+class Otherapp extends Component {
+	constructor (props) {
+		super(props)
+		this.state = {
+			apps: []
+		}
+	}
 
-let Otherapp = React.createClass({
-	getInitialState: function() {
-        return {
-        	apps: [],
-        };
- 	},
+	componentDidMount () {
+		this.serverReauest = jsonp(this.props.source, "", "callback", data => {
+			if (data.status) {
+				
+					this.setState({
+						apps: data.data
+					});
+				
+			} else {
+				alert(data.msg);
+			}
+		});
+	}
 
- 	componentDidMount: function() {
- 		jsonp(this.props.source, "", "callback", (data) => {
- 			if(data.status) {
- 				if(this.isMounted()) {
- 					this.setState({
- 						apps: data.data,
- 					})
- 				}
- 			}else {
- 				alert(data.msg);
- 			}
- 		});
- 	},
- 	
-	render: function() {
+	componentWillUnmount () {
+		this.serverReauest.abort()
+	}
+
+	render () {
 		let countId = 0;
 		return (
 			<div className="oapp">
 				<ul>
-					{
-						this.state.apps.map((app) => {
-							return <li key={ "otherapp" + countId++ }>
-										<a href={ app.url }>
-											<div className="app_icon">
-												<img src={ app.icon } alt=""/>
-											</div>
-											<span>{ app.title }</span>
-										</a>
-									</li>
-						})
-					}
+					{this.state.apps.map(app => {
+						return (
+							<li key={"otherapp" + countId++}>
+								<a href={app.url}>
+									<div className="app_icon">
+										<img src={app.icon} alt="" />
+									</div>
+									<span>{app.title}</span>
+								</a>
+							</li>
+						);
+					})}
 				</ul>
 			</div>
 		);
 	}
-})
+};
 
-module.exports = Otherapp;
+export default Otherapp;
